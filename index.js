@@ -45,7 +45,7 @@ const getMembership = async () => {
 };
 
 document.addEventListener("alpine:init", async () => {
-  Alpine.store("data", store);
+  Alpine.data("data", () => store);
   const video = document.getElementById("my-video");
   var player = videojs(video);
 
@@ -63,7 +63,3 @@ document.addEventListener("alpine:init", async () => {
   store.membership = membership;
   console.log("init");
 });
-
-const getStore = () => {
-  return store;
-}
