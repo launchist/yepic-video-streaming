@@ -20,12 +20,6 @@ const idFromQueryParam = params.get("id");
 const refCode = params.get("ref_code");
 const refSource = params.get("ref_source");
 
-if (refCode) {
-  localStorage.setItem("viral-loops-invite-is-invited", "true");
-  localStorage.setItem("viral-loops-invite-ref_code", refCode);
-  localStorage.setItem("viral-loops-invite-ref_source", refSource);
-}
-
 const store = {
   getVideoEndpoint,
   id: idFromQueryParam,
