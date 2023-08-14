@@ -20,6 +20,12 @@ const idFromQueryParam = params.get("id");
 const refCode = params.get("ref_code");
 const refSource = params.get("ref_source");
 
+if (refCode) {
+  localStorage.setItem("viral-loops-invite-is-invited", "true");
+  localStorage.setItem("viral-loops-invite-ref_code", refCode);
+  localStorage.setItem("viral-loops-invite-ref_source", refSource);
+}
+
 const store = {
   getVideoEndpoint,
   id: idFromQueryParam,
@@ -28,16 +34,6 @@ const store = {
   membership: null,
   refCode,
   refSource,
-  onSingUpWithRefCode: () => {
-    if (!store.refCode) {
-      console.warn("no ref code");
-      return;
-    }
-    console.log("onSingUpWithRefCode");
-    localStorage.setItem("viral-loops-invite-is-invited", 'true');
-    localStorage.setItem("viral-loops-invite-ref_code", refCode);
-    localStorage.setItem("viral-loops-invite-ref_source", refSource);
-  }
 };
 
 let isLoading = false;
@@ -59,14 +55,16 @@ document.addEventListener("alpine:init", async () => {
   const video = document.getElementById("my-video");
   var player = videojs(video);
 
-  player.log('window.player created', player);
+  player.log("window.player created", player);
 
   player.loadMedia({
-    src: [{
-      src: store.getStreamUrl,
-      type: 'video/mp4'
-    }]
-  })
+    src: [
+      {
+        src: store.getStreamUrl,
+        type: "video/mp4",
+      },
+    ],
+  });
   const membership = await getMembership();
   store.membership = membership;
   console.log("init");
