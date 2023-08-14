@@ -63,3 +63,7 @@ document.addEventListener("alpine:init", async () => {
   store.membership = membership;
   console.log("init");
 });
+
+const getStore = () => {
+  return store;
+}
