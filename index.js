@@ -14,7 +14,11 @@ const requestOptions = {
   headers: myHeaders,
 };
 
-const idFromQueryParam = new URLSearchParams(location.search).get("id");
+const params = new URLSearchParams(window.location.search);
+
+const idFromQueryParam = params.get("id");
+const refCode = params.get("ref_code");
+const refSource = params.get("ref_source");
 
 const store = {
   getVideoEndpoint,
@@ -22,6 +26,18 @@ const store = {
   getStreamUrl: `${getVideoEndpoint}${getVideoSlug}?id=${idFromQueryParam}`,
   video: null,
   membership: null,
+  refCode,
+  refSource,
+  onSingUpWithRefCode: () => {
+    if (!store.refCode) {
+      console.warn("no ref code");
+      return;
+    }
+    console.log("onSingUpWithRefCode");
+    localStorage.setItem("viral-loops-invite-is-invited", 'true');
+    localStorage.setItem("viral-loops-invite-ref_code", refCode);
+    localStorage.setItem("viral-loops-invite-ref_source", refSource);
+  }
 };
 
 let isLoading = false;
